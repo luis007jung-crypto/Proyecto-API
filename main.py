@@ -71,8 +71,8 @@ def obtener_cliente(cliente_id: str):
         return cliente
     else:
         return {"message": "Cliente no encontrado"}, 404
-    
-    
+        
+
 @api.post("/clientes")
 def agregar_cliente(cliente: Cliente):
     """Endpoint para agregar un nuevo cliente a la base de datos"""
@@ -81,8 +81,6 @@ def agregar_cliente(cliente: Cliente):
     database[cliente_id] = cliente
     guardar_database(database)
     return {"message": "Cliente agregado exitosamente", "cliente_id": cliente_id}
-
-
 
     
 @api.put("/clientes/{cliente_id}")
@@ -95,7 +93,8 @@ def actualizar_cliente(cliente_id: str, cliente: Cliente):
         return {"message": "Cliente actualizado exitosamente"}
     else:
         return {"message": "Cliente no encontrado"}, 404
-    
+
+
 @api.delete("/clientes/{cliente_id}")
 def eliminar_cliente(cliente_id: str):
     """Endpoint para eliminar un cliente por su ID"""
