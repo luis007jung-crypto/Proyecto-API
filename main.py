@@ -62,6 +62,17 @@ def listar_clients()->list[Cliente]:
     return database
 
 
+@api.get("/clientes/{cliente_id}")
+def obtener_cliente(cliente_id: str):
+    """Endpoint para obtener un cliente por su ID"""
+    database = load_database()
+    cliente = database.get(cliente_id)
+    if cliente:
+        return cliente
+    else:
+        return {"message": "Cliente no encontrado"}, 404
+    
+    
 @api.post("/clientes")
 def agregar_cliente(cliente: Cliente):
     """Endpoint para agregar un nuevo cliente a la base de datos"""
@@ -72,15 +83,7 @@ def agregar_cliente(cliente: Cliente):
     return {"message": "Cliente agregado exitosamente", "cliente_id": cliente_id}
 
 
-@api.get("/clientes/{cliente_id}")
-def obtener_cliente(cliente_id: str):
-    """Endpoint para obtener un cliente por su ID"""
-    database = load_database()
-    cliente = database.get(cliente_id)
-    if cliente:
-        return cliente
-    else:
-        return {"message": "Cliente no encontrado"}, 404
+
     
 @api.put("/clientes/{cliente_id}")
 def actualizar_cliente(cliente_id: str, cliente: Cliente):
