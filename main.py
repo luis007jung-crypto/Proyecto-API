@@ -70,3 +70,40 @@ def eliminar_venta(venta_id: str):
     else:
         return {"message": "Venta no encontrada"}, 404
     
+@api.get("/ventas/{venta_id}/detalles")
+def listar_productos_venta(venta_id: str):
+    """Endpoint para listar los productos de una venta específica"""
+    database = load_database()
+    venta = database.get(venta_id)
+    if venta:
+        return venta.get("detalles", [])
+    else:
+        return {"message": "Venta no encontrada"}, 404
+    
+@api.post("/ventas/{venta_id}/detalles")
+def agregar_producto_venta(venta_id: str, detalle: producto_venta):
+    """Endpoint para agregar un producto a una venta específica"""
+    database = load_database()
+    venta = database.get(venta_id)
+    if venta:
+        detalles = venta.get("detalles", [])
+        detalles.append(detalle)
+        venta["detalles"] = detalles
+        guardar_database(database)
+        return {"message": "Producto agregado a la venta exitosamente"}
+    else:
+        return {"message": "Venta no encontrada"}, 404
+    
+@api.put("/detalles/{detalle_id}")
+def modificar_cantidad_o_subtotal(detalle_id: str, detalle: producto_venta):
+    """Endpoint para modificar la cantidad o el subtotal de un producto en una venta"""
+    database = load_database()
+    for venta in database.values():
+        detalles = venta.get("detalles", [])
+        for d in detalles:
+            if d["iddetalle"] == detalle_id:
+                d["cantidad"] = detalle.cantidad
+                d["subtotal"] = detalle.subtotal
+                guardar_database(database)
+                return {"message": "Detalle actualizado exitosamente"}
+    return {"message": "Detalle no encontrado"}, 404
