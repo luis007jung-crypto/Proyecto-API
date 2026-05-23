@@ -14,4 +14,7 @@ app.include_router(abonos_router)
 app.include_router(ventas_router)
 app.include_router(producto_venta_router)
 
+<<<<<<< HEAD
 """prueba de commit"""
+=======
+>>>>>>> a0416c71ae5974ae863a9cc87b611c4ee7e56544
