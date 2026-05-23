@@ -1,10 +1,13 @@
-from main import JSON_DATABASE_FILE
 import json
+from pathlib import Path
+
+DATABASE_FILE = Path(__file__).resolve().parent.parent / "database.json"
+
 
 def load_database():
-    """Función para cargar la base de datos desde un archivo JSON"""
+    """Función para cargar la base de datos desde un archivo JSON."""
     try:
-        with open(JSON_DATABASE_FILE, "r") as f:
-            return json.load(f)
+        with DATABASE_FILE.open("r", encoding="utf-8") as archivo:
+            return json.load(archivo)
     except FileNotFoundError:
-        return {}  # Retorna una base de datos vacía si no existe el archivo
+        return {}
