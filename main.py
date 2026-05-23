@@ -8,10 +8,6 @@ from endpoints.producto_venta import producto_venta_router
 
 app = FastAPI()
 
-@app.get("/")
-def root():
-    return {"mensaje": "API funcionando"}
-
 app.include_router(clientes_router)
 app.include_router(productos_router)
 app.include_router(abonos_router)
